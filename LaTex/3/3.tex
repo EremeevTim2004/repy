@@ -1,0 +1,41 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{hhline}
+\usepackage[english, russian]{babel}
+
+\begin{document}
+    \section*{Вариант 18}
+    
+    Рассмотрим задачу о минимизации ошибки системы угловой стабилизатории подвижного объекта управления,
+    а именно, угла отклонения $\beta_1$ ракеты от вертикали,
+    обусловленного воздействием входного возмущения в виде поперечной силы $F_e$, с учётом упругих деформаций корпуса ракеты.
+
+    \begin{equation*}
+        J_0\ddot{\beta_0} = -p_1 \dot{\beta_0} - p_2\beta_0 + \mathbf{S}(\beta_1 + \beta_2),
+        m_1\ddot{y_1} = (1 + m_1 + m_2)\beta_0 + P_1 - F_e, 
+    \end{equation*}
+    \begin{equation*}
+        J_2(\ddot{\beta_1} + \ddot{\beta_2}) = M_2 - aP_2,
+        \mathbf{S}(.) = p_3d()/dt + p_4 () + p_5\int_{0}^{t} () \,dt,
+    \end{equation*}
+    \begin{equation}
+        \ddot{u} + u^{''''} + \gamma \dot{u^{''''}} + a_x[(m_2 + (1 - x))u^{'}]^{'} = -\ddot{y_1} - x \ddot{\beta_1},
+        ()^{'} = \partial () / \partial (x),
+    \end{equation}
+    \begin{equation*}
+        M_1 = u^{''}(0, t) + \gamma \dot{u^{''}}(0, t),
+        P_1 = -u^{'''}(0, t) - \gamma \dot{u^{'''}}(0,t),
+    \end{equation*}
+    \begin{equation*}
+        \beta_0(0) = \beta_1(0) = \beta_2(0) = \dot{\beta_1}(0) =
+        \dot{\beta_2}(0) = y_1(0) = y_2(0) = \dot{y_1}(0) = \dot{y_2}(0),
+        u(x, 0) = \dot{u}(x, 0) = 0.
+    \end{equation*}
+
+    Здесь точкой сверху обозначено дифференцирование по времени $t$.
+    \end{document}
