@@ -10,7 +10,7 @@
 означающим, что высота дерева увеличилась.
 Предположим, что процесс из левой ветви возвращается к родителю (рекурсия идет назад),
 тогда возможны три случая:
-{ $ $ "--- высота левого поддерева, $ $- высота правого поддерева }
+{$h_1$ "--- высота левого поддерева, $h_r$- высота правого поддерева}
 Включение вершины в левое поддерево приведет к
 
 \input{AddAlgorithm/list2.tex}
@@ -22,3 +22,94 @@
 Процедура вставки, предложенная Н.Виртом
 
 %листинг
+\begin{}
+procedure TAVL.InsertNode(Var Tree : TAVLTree; const akey : TKey; const ainfo : TInfo; Var flag : Boolean);
+ Var
+ Node1, Node2 : TAVLTree;
+ begin
+ if Tree = nil then
+  begin
+    New(Tree);
+    flag := true;
+    with Tree^ do
+      begin
+        key := akey;
+        info := ainfo;
+        left := nil;
+        right := nil;
+        balance := 0;
+      end;
+    inc(AVL.FNodes);
+  end
+ else if Tree^.key > akey then
+  begin
+    InsertNode(Tree^.left,akey,ainfo,flag);
+    if flag then
+      case Tree^.balance of
+      1 : begin Tree^.balance := 0; flag := false; end;
+      0 : Tree^.balance := -1;
+      -1 :   { Balance }
+        begin
+         Node1 := Tree^.left;
+         if Node1^.balance = -1 then
+          { LL }
+            begin
+              Tree^.left := Node1^.right;
+              Node1^.right := Tree;
+              Tree^.balance := 0;
+              Tree := Node1;
+            end
+         else
+            {LR}
+            begin
+              Node2 := Node1^.right;
+              Node1^.right :=  Node2^.left;
+              Node2^.left := Node1;
+              Tree^.left := Node2^.right;
+              Node2^.right := Tree;
+              if Node2^.balance = -1 then Tree^.balance := 1 else Tree^.balance := 0;
+              if Node2^.balance = 1 then Node1^.balance := -1 else Node1^.balance := 0;
+              Tree := Node2;
+            end;
+         Tree^.balance := 0;
+         flag := false
+        end
+      end
+  end
+ else if Tree^.key < akey then
+  begin
+    InsertNode(Tree^.right,akey,ainfo,flag);
+    if flag then
+      case Tree^.balance of
+      -1 : begin Tree^.balance := 0; flag := false; end;
+      0 : Tree^.balance := 1;
+      1 :   { Balance }
+        begin
+         Node1 := Tree^.right;
+         if Node1^.balance = 1 then
+          { RR }
+            begin
+              Tree^.right := Node1^.left;
+              Node1^.left := Tree;
+              Tree^.balance := 0;
+              Tree := Node1;
+            end
+         else
+            {RL}
+            begin
+              Node2 := Node1^.left;
+              Node1^.left :=  Node2^.right;
+              Node2^.right := Node1;
+              Tree^.right := Node2^.left;
+              Node2^.left := Tree;
+              if Node2^.balance = 1 then Tree^.balance := -1 else Tree^.balance := 0;
+              if Node2^.balance = -1 then Node1^.balance := 1 else Node1^.balance := 0;
+              Tree := Node2;
+            end;
+         Tree^.balance := 0;
+         flag := false
+        end
+      end
+  end
+ end;
+\end{}

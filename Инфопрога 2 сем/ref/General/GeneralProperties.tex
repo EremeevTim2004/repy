@@ -9,7 +9,29 @@
 хотя $\lg(2) = 1$. Для точной оценки глубины дерева следует использовать пользовательскую программу.
 
 % листинг
+\begin{}
+function TreeDepth(Tree : TAVLTree) : byte;
+begin
+   if Tree <> nil then
+      result := 1 + Max(TreeDepth(Tree^.left),TreeDepth(Tree^.right))
+  else
+      result := 0;
+end;
+\end{}
 
 Тип Дерева можно описать так:
 
 % ещё один листинг
+\begin{}
+TKey = LongInt;
+TInfo = LongInt;
+TBalance = -1..1;
+TAVLTree = ^ TAVLNode;
+  TAVLNode = record
+    left, right : TAVLTree;
+    key : TKey;
+    info : TInfo;
+{ Поле определяющее сбалансированность вершины }
+    balance : TBalance;
+  end;
+\end{}
