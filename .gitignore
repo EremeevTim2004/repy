@@ -4,3 +4,12 @@
 .log
 .aux
 .fdb_latexmk
+.raw
+.jpeg
+.jpg
+.tiff
+.psd
+.bmp
+.gif
+.png
+.jp2
