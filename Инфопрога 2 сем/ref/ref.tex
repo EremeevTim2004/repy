@@ -2,7 +2,7 @@
 
 \input{preambula.sty}
 
-\newcommand{\sectionbreak}{\clearpage}
+%\newcommand{\sectionbreak}{\clearpage}
 
 \begin{document}
     \title{Доклад про AVL-дерево}
@@ -17,24 +17,29 @@
     \input{introduction.tex}
 
     \section*{Общие свойства}
-    %\input{General/GeneralProperties.tex}
+    \input{General/GeneralProperties.tex}
 
     \section*{Балансировка}
     \input{balancing.tex}
 
     \section*{Алгоритм добавления вершин}
-    \input{AlgorithmOfAdd.tex}
+    \input{AddAlgorithm.tex}
 
     \section*{Алгоритм удаления вершин}
-    %\input{AlgorithmOfRemove.tex}
+    \input{RemoveAlgorithm.tex}
 
     \section*{Расстановка балансов при удалении}
+    \input{RebalancingWhenRemoving.tex}
 
     \section*{Расстановка при одинарном повороте}
+    \input{SingleTurnAlignment/SingleTurnAlignment.tex}
 
     \section*{расстановка балансов при двойном повороте}
+    \input{DoubleTurnAlignment/DoubleTurnAlignment.tex}
 
     \section*{Оценка эффективности}
+    \input{EfficiencyMark.tex}
 
     \section{Список используемой литературы}
+    \input{SorceList.tex}
 \end{document}
