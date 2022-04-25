@@ -1,0 +1,44 @@
+\documentclass[a4paper, 12pt]{article}
+
+\input{preambula.sty}
+
+\begin{document}
+    \title{Доклад про AVL-дерево}
+    \author{Еремеев Тимур}
+    \date{10 апреля 2022}
+
+    \maketitle
+
+    \tableofcontents
+
+    \section*{Введение}
+    \input{introduction.tex}
+
+    \section*{Общие свойства}
+    \input{General/GeneralProperties.tex}
+
+    \section*{Балансировка}
+    \input{Balansing/balancing.tex}
+
+    \section*{Алгоритм добавления вершин}
+    \input{AddAlgorithm/AddAlgorithm.tex}
+
+    \section*{Алгоритм удаления вершин}
+    \input{RemoveAlgorithm.tex}
+
+    \section*{Расстановка балансов при удалении}
+    \input{RebalancingWhenRemoving.tex}
+
+    \section*{Расстановка при одинарном повороте}
+    \input{SingleTurnAlignment/SingleTurnAlignment.tex}
+
+    \section*{Расстановка балансов при двойном повороте}
+    \input{DoubleTurnAlignment/DoubleTurnAlignment.tex}
+
+    \section*{Оценка эффективности}
+    \input{EfficiencyMark.tex}
+
+    \section*{Список используемой литературы}
+    \input{SorceList.tex}
+
+\end{document}
