@@ -1,2 +1,2 @@
 # repy
-for averything
+for everything
