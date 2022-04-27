@@ -153,7 +153,7 @@ hit_t cast_ray(Vector2 pos, float dir)
  
 int main()
 {
-    InitWindow(screenWidth, screenHeight, "GDSC: Creative Coding");
+    InitWindow(screenWidth * 2, screenHeight, "GDSC: Creative Coding");
     SetTargetFPS(60);
  
     player_t player;
@@ -228,6 +228,9 @@ int main()
                 hit_t hit = cast_ray(player.pos, player.rotation + angle * DEG2RAD);
             
                 DrawLineEx(player.pos, hit.pos, 2, BLUE);
+            }
+
+                DrawRectangle(rect_x, (screenHeight - rec_h) / 2, rec_w + 1, rec)
             }
         }
 
