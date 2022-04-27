@@ -157,6 +157,7 @@ int main()
     SetTargetFPS(60);
  
     player_t player;
+
     player.pos = { screenWidth / 2, screenHeight / 2 };
     player.speed = 100;
     player.rotation = 0;
@@ -165,37 +166,56 @@ int main()
     while (!WindowShouldClose())
     {
         float dt = GetFrameTime();
+
         if (IsKeyDown(KEY_W))
+        {
             player.pos.y -= player.speed * dt;
+        }
+
         if (IsKeyDown(KEY_S))
+        {
             player.pos.y += player.speed * dt;
+        }
+        
         if (IsKeyDown(KEY_A))
+        {
             player.pos.x -= player.speed * dt;
+        }
+
         if (IsKeyDown(KEY_D))
+        {
             player.pos.x += player.speed * dt;
+        }
  
         Vector2 mp = {
             GetMouseX() - player.pos.x,
             GetMouseY() - player.pos.y
         };
+
         player.rotation = Vector2Angle({ 1, 0 }, mp);
  
         BeginDrawing();
         {
             ClearBackground(WHITE);
-            for (int row = 0; row < board_h; ++row) {
-                for (int col = 0; col < board_w; ++col) {
-                    if (board[col][row] == 1) {
-                        DrawRectangle(col * cell_size, row * cell_size,
-                            cell_size, cell_size, BLACK);
+
+            for (int row = 0; row < board_h; ++row)
+            {
+                for (int col = 0; col < board_w; ++col)
+                {
+                    if (board[col][row] == 1)
+                    {
+                        DrawRectangle(col * cell_size, row * cell_size, cell_size, cell_size, BLACK);
                     }
                 }
             }
  
-            for (int x = cell_size; x < screenWidth; x += cell_size) {
+            for (int x = cell_size; x < screenWidth; x += cell_size)
+            {
                 DrawLine(x, 0, x, screenHeight, GRAY);
             }
-            for (int y = cell_size; y < screenHeight; y += cell_size) {
+
+            for (int y = cell_size; y < screenHeight; y += cell_size)
+            {
                 DrawLine(0, y, screenWidth, y, GRAY);
             }
  
@@ -203,13 +223,17 @@ int main()
  
             DrawLineEx(player.pos, player.pos + Vector2Rotate({ 1,0 }, player.rotation) * 25, 5, BLUE);
  
-            for (float angle = -player.fov / 2; angle < player.fov / 2; ++angle) {
+            for (float angle = -player.fov / 2; angle < player.fov / 2; ++angle)
+            { 
                 hit_t hit = cast_ray(player.pos, player.rotation + angle * DEG2RAD);
+            
                 DrawLineEx(player.pos, hit.pos, 2, BLUE);
             }
         }
+
         EndDrawing();
     }
+
     CloseWindow();
  
     return 0;
