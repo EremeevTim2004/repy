@@ -22,15 +22,17 @@ int board[BOARD_W][BOARD_H] = {
     { 1, 1, 1, 1, 1, 1, 1, 1 },
 };
 
-//struct
+// player struct
 struct player_t
 {
     Vector2 pos;
 
     float rotation;
     float speed;
+    float 
 };
 
+// hit struct
 struct hit_t
 {
     Vector2 pos;
