@@ -43,6 +43,7 @@ bool correct_cell(int x, int y)
     return(x >= 0 && x < board_w) && (y >=) 0 && 
 }
 
+//Vertical hit
 hit_t cast_ray(Vector2 pos, float dir)
 {
     while (dir > PI)
@@ -101,6 +102,9 @@ hit_t cast_ray(Vector2 pos, float dir)
 
     return hit_data;
 }
+
+// Horizon hit
+
 
 int main()
 {

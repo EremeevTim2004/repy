@@ -76,6 +76,12 @@ project "Mondelbrot"
     location "src/%{prj.name}"
     files { "src/%{prj.name}/**.h", "src/%{prj.name}/**.hpp", "src/%{prj.name}/**.cpp" }
 
+project "L-systems"
+    language "C++"
+    cppdialect "C++17"
+    location "src/%{prj.name}"
+    files { "src/%{prj.name}/**.h", "src/%{prj.name}/**.hpp", "src/%{prj.name}/**.cpp" }
+
 project "ray-casting"
     language "C++"
     cppdialect "C++17"
