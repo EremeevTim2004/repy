@@ -229,8 +229,9 @@ int main()
             
                 DrawLineEx(player.pos, hit.pos, 2, BLUE);
             }
+                
 
-                DrawRectangle(rect_x, (screenHeight - rec_h) / 2, rec_w + 1, rec)
+                DrawRectangle(rect_x, (screenHeight - rec_h) / 2, rec_w + 1, rec_h, RED);
             }
         }
 
