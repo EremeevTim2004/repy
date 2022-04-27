@@ -38,6 +38,11 @@ struct hit_t
     struct {int x, y} cell_pos;
 };
 
+bool correct_cell(int x, int y)
+{
+    return(x >= 0 && x < board_w) && (y >=) 0 && 
+}
+
 hit_t cast_ray(Vector2 pos, float dir)
 {
     while (dir > PI)
@@ -76,7 +81,25 @@ hit_t cast_ray(Vector2 pos, float dir)
 
         Vector2 d = {dx, dy};
         Vector2 hit = d + pos;
+
+        int cell_hit_x = int(hit.x / cell_size) + shift - 1;
+        int cell_hit_y = int(hit.x / cell_size);
+
+        hit_data_v.pos = hit;
+        hit_data_v.cell_pos = {cell_hit_x, cell_hit_y};
+
+        if (!correct_cell(cell_hit_x, cell_hit_y))
+        {
+            break;
+        }
+
+        if (board[cell_hit_x][cell_hit_y] != 0)
+        {
+            break;
+        }
     }
+
+    return hit_data;
 }
 
 int main()
@@ -125,7 +148,7 @@ int main()
             {
                 for (int col = 0; col < board_w; col ++)
                 {
-                    if (board[row][col] == 1)
+                    if (board[col][row] == 1)
                     {
                         DrawRectangle(col * cell_size, row * cell_size, cell_size, cell_size, BLACK);
                     }
@@ -144,6 +167,10 @@ int main()
                 DrawingCircleV(player.pos, 15, RED);
 
                 DrawLineEx(player.pos, player.pos + Vector2Rotate({1, 0}, player.rotation) * 10, 5, BLUE);
+
+                hit_t = cast_ray(player.pos, player.rotation);
+
+                DrawLineEx(player.pos, hit.pos, 2 , GREEN)
             }
         }
     }
