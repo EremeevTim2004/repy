@@ -22,6 +22,7 @@ int board[BOARD_W][BOARD_H] = {
     { 1, 1, 1, 1, 1, 1, 1, 1 },
 };
 
+//struct
 struct player_t
 {
     Vector2 pos;
@@ -30,9 +31,37 @@ struct player_t
     float speed;
 };
 
+struct hit_t
+{
+    Vector2 pos;
+
+    struct {int x, y} cell_pos;
+};
+
+hit_t cast_ray(Vector2 pos, float dir)
+{
+    while (dir > PI)
+    {
+        dir -= 2 * PI;
+    }
+
+    while (dir < -PI)
+    {
+        dir += 2 * PI;
+    }
+
+    int cell_x = pos.x / cell_size;
+    int cell_y = pos.y / cell_size;
+
+    for (int k = 0; ; k ++)
+    {
+        
+    }
+}
+
 int main()
 {
-    IntWindow(screenWidth, screenHeight, "");
+    IntWindow(screenWidth, screenHeight, "GDSC: Creative Coding");
     SetTargetFPS(60);
 
     player_t player;
@@ -66,7 +95,7 @@ int main()
 
         Vector2 mp = { GetMouseX() - player.pos.x, GetMousY - player.pos.y};
 
-        player.rotation = Vector2Angle({1, 0}, mp) * DEG2RAD;
+        player.rotation = Vector2Angle({1, 0}, mp);
 
         BeginDrawing();
         {
