@@ -55,7 +55,27 @@ hit_t cast_ray(Vector2 pos, float dir)
 
     for (int k = 0; ; k ++)
     {
-        
+        int shift;
+        int k_dir;
+
+        if (dir > -PI / 2 && dir < PI / 2)
+        {
+            shift = 1;
+
+            k_dir = 1
+        }
+
+        else{
+            shift = 0;
+
+            k_dir = -1;
+        }
+
+        float dx = (cell_x + shift + k * k_dir) * cell_size - pos.x;
+        float dy = dx * tan(dir);
+
+        Vector2 d = {dx, dy};
+        Vector2 hit = d + pos;
     }
 }
 
