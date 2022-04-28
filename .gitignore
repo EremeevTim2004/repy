@@ -1,19 +1,29 @@
-.pdf
-.synctex.gz
-.fls
-.log
-.aux
-.fdb_latexmk
-.raw
-.jpeg
-.jpg
-.tiff
-.psd
-.bmp
-.gif
-.png
-.jp2
-.toc
-.xml
-.iml
-.gitignore
+JavaProjects/.idea/misc.xml
+JavaProjects/.idea/modules.xml
+JavaProjects/.idea/.gitignore
+
+PythonProjects/.idea/.gitignore
+PythonProjects/.idea/misc.xml
+PythonProjects/.idea/modules.xml
+PythonProjects/.idea/vcs.xml
+PythonProjects/.idea/PythonProjects.iml
+PythonProjects/.idea/inspectionProfiles/profiles_settings.xml
+
+Инфопрога 2 сем/prez/prez.pdf
+Инфопрога 2 сем/prez/images/1.pdf
+Инфопрога 2 сем/prez/images/2.pdf
+Инфопрога 2 сем/prez/images/3.pdf
+Инфопрога 2 сем/prez/images/4.pdf
+Инфопрога 2 сем/ref/Images/1.pdf
+Инфопрога 2 сем/ref/Images/2.pdf
+Инфопрога 2 сем/ref/Images/3.pdf
+Инфопрога 2 сем/ref/Images/4.pdf
+Инфопрога 2 сем/prez/prez.toc
+Инфопрога 2 сем/prez/prez.synctex.gz
+Инфопрога 2 сем/prez/prez.snm
+Инфопрога 2 сем/prez/prez.out
+Инфопрога 2 сем/prez/prez.nav
+Инфопрога 2 сем/prez/prez.log
+Инфопрога 2 сем/prez/prez.fls
+Инфопрога 2 сем/prez/prez.fdb_latexmk
+Инфопрога 2 сем/prez/prez.aux
