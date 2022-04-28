@@ -1,8 +1,10 @@
-JavaProjects/.idea/misc.xml
-JavaProjects/.idea/modules.xml
 JavaProjects/.idea/.gitignore
 
+JavaProjects/.idea/misc.xml
+JavaProjects/.idea/modules.xml
+
 PythonProjects/.idea/.gitignore
+
 PythonProjects/.idea/misc.xml
 PythonProjects/.idea/modules.xml
 PythonProjects/.idea/vcs.xml
@@ -10,14 +12,12 @@ PythonProjects/.idea/PythonProjects.iml
 PythonProjects/.idea/inspectionProfiles/profiles_settings.xml
 
 Инфопрога 2 сем/prez/prez.pdf
+
 Инфопрога 2 сем/prez/images/1.pdf
 Инфопрога 2 сем/prez/images/2.pdf
 Инфопрога 2 сем/prez/images/3.pdf
 Инфопрога 2 сем/prez/images/4.pdf
-Инфопрога 2 сем/ref/Images/1.pdf
-Инфопрога 2 сем/ref/Images/2.pdf
-Инфопрога 2 сем/ref/Images/3.pdf
-Инфопрога 2 сем/ref/Images/4.pdf
+
 Инфопрога 2 сем/prez/prez.toc
 Инфопрога 2 сем/prez/prez.synctex.gz
 Инфопрога 2 сем/prez/prez.snm
@@ -27,3 +27,17 @@ PythonProjects/.idea/inspectionProfiles/profiles_settings.xml
 Инфопрога 2 сем/prez/prez.fls
 Инфопрога 2 сем/prez/prez.fdb_latexmk
 Инфопрога 2 сем/prez/prez.aux
+
+Инфопрога 2 сем/ref/Images/1.pdf
+Инфопрога 2 сем/ref/Images/2.pdf
+Инфопрога 2 сем/ref/Images/3.pdf
+Инфопрога 2 сем/ref/Images/4.pdf
+
+Инфопрога 2 сем/ref/ref.aux
+Инфопрога 2 сем/ref/ref.fdb_latexmk
+Инфопрога 2 сем/ref/ref.fls
+Инфопрога 2 сем/ref/ref.log
+Инфопрога 2 сем/ref/ref.pdf
+Инфопрога 2 сем/ref/ref.synctex.gz
+Инфопрога 2 сем/ref/ref.toc
+
