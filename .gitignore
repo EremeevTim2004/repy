@@ -1,16 +1,3 @@
-JavaProjects/.idea/.gitignore
-
-JavaProjects/.idea/misc.xml
-JavaProjects/.idea/modules.xml
-
-PythonProjects/.idea/.gitignore
-
-PythonProjects/.idea/misc.xml
-PythonProjects/.idea/modules.xml
-PythonProjects/.idea/vcs.xml
-PythonProjects/.idea/PythonProjects.iml
-PythonProjects/.idea/inspectionProfiles/profiles_settings.xml
-
 Инфопрога 2 сем/prez/prez.pdf
 
 Инфопрога 2 сем/prez/images/1.pdf
@@ -41,3 +28,7 @@ PythonProjects/.idea/inspectionProfiles/profiles_settings.xml
 Инфопрога 2 сем/ref/ref.synctex.gz
 Инфопрога 2 сем/ref/ref.toc
 
+Введение в специальность/referat/ref.aux
+Введение в специальность/referat/ref.fdb_latexmk
+Введение в специальность/referat/ref.fls
+Введение в специальность/referat/ref.log
