@@ -83,7 +83,7 @@ bool isEmpty(int board[5][3], int rows, int cols)
     return true;
 }
 
-void initBoard(int diskCount, int board[5][3], int rows, nCol)
+void initBoard(int diskCount, int board[5][3], int rows, int nCol)
 {
     int lastRowIndex = rows - 1;
 
@@ -95,7 +95,7 @@ void initBoard(int diskCount, int board[5][3], int rows, nCol)
     }
 }
 
-void moveTower(int amount, char point1, char, point2, char temp, int board[5][3], int rows, int cols)
+void moveTower(int amount, char point1, char point2, char temp, int board[5][3], char rows, char cols)
 {
     if (amount == 0)
     {
