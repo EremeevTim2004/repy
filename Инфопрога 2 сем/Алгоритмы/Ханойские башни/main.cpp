@@ -2,7 +2,7 @@
 
 using namespace std;
 
-void showBoard(int board[disk_kol][3],  int rows, int cols)
+void showBoard(int board[5][3],  int rows, int cols)
 {
     for (int i = 0; i < rows; i++)
     {
@@ -25,7 +25,7 @@ void showBoard(int board[disk_kol][3],  int rows, int cols)
     std::cout << "\n\n";
 }
 
-int getRow(int board[disk_kol][3], int rows, int nCol)
+int getRow(int board[5][3], int rows, int nCol)
 {
     int nRow = -1;
 
@@ -42,7 +42,7 @@ int getRow(int board[disk_kol][3], int rows, int nCol)
     return nRow;
 }
 
-void move(char point1, char point2, int board[disk_kol][3], int rows, int cols)
+void move(char point1, char point2, int board[5][3], int rows, int cols)
 {
     int col1 = (int)point1 - (int)'A';
     int col2 = (int)point2 - (int)'A';
@@ -52,7 +52,7 @@ void move(char point1, char point2, int board[disk_kol][3], int rows, int cols)
 
     if (row2 == -1)
     {
-        row2 = row - 1;
+        row2 = rows - 1;
     }
 
     else
@@ -68,11 +68,11 @@ void move(char point1, char point2, int board[disk_kol][3], int rows, int cols)
     showBoard(board, rows, cols)
 }
 
-bool isEmpty(int board[]disk_kol[3], int rows, int cols)
+bool isEmpty(int board[5][3], int rows, int cols)
 {
-    int lastRowIndex = row - 1;
+    int lastRowIndex = rows - 1;
     
-    for (int j = 0l j < cols; j++)
+    for (int j = 0; j < cols; j++)
     {
         if (board[lastRowIndex][j] != 0)
         {
@@ -83,7 +83,7 @@ bool isEmpty(int board[]disk_kol[3], int rows, int cols)
     return true;
 }
 
-void initBoard(int diskCount, int boar[disk_kol][3], int rows, nCol)
+void initBoard(int diskCount, int board[5][3], int rows, nCol)
 {
     int lastRowIndex = rows - 1;
 
@@ -95,7 +95,7 @@ void initBoard(int diskCount, int boar[disk_kol][3], int rows, nCol)
     }
 }
 
-void moveTower(int amount, char point1, char, point 2, char temp, int board[disk_kol][3], int rows, int cols)
+void moveTower(int amount, char point1, char, point2, char temp, int board[5][3], int rows, int cols)
 {
     if (amount == 0)
     {
@@ -120,15 +120,10 @@ void moveTower(int amount, char point1, char, point 2, char temp, int board[disk
 
 int main()
 {
-    int disk_kol;
-
-    std::cout << "Введите кол-во дисков" << std::endl << ">>";
-    std::cin >> disk_kol;
-
-    const int rows = disk_kol;
+    const int rows = 5;
     const int cols = 3;
 
     int board[rows][cols] = {0};
 
-    moveTower(disk_kol, 'A', 'B', 'C', board, rows, cols);
+    moveTower(5, 'A', 'B', 'C', board, rows, cols);
 }
