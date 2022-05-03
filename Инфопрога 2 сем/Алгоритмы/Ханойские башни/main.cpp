@@ -65,7 +65,7 @@ void move(char point1, char point2, int board[5][3], int rows, int cols)
     board[row1][col1] = 0;
     board[row2][col2] = value;
 
-    showBoard(board, rows, cols)
+    showBoard(board, rows, cols);
 }
 
 bool isEmpty(int board[5][3], int rows, int cols)
