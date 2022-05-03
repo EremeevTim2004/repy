@@ -2,6 +2,38 @@
 
 using namespace std;
 
+bool isEmpty(int board[5][3], int rows, int cols)
+{
+    int lastRowIndex = rows - 1;
+    
+    for (int j = 0; j < cols; j++)
+    {
+        if (board[lastRowIndex][j] != 0)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+int getRow(int board[5][3], int rows, int nCol)
+{
+    int nRow = -1;
+
+    for (int i = 0; i < rows; i++)
+    {
+        if (board[i][nCol] != 0)
+        {
+            nRow = i;
+
+            break;
+        }
+    }
+
+    return nRow;
+}
+
 void showBoard(int board[5][3],  int rows, int cols)
 {
     for (int i = 0; i < rows; i++)
@@ -23,23 +55,6 @@ void showBoard(int board[5][3],  int rows, int cols)
     }
 
     std::cout << "\n\n";
-}
-
-int getRow(int board[5][3], int rows, int nCol)
-{
-    int nRow = -1;
-
-    for (int i = 0; i < rows; i++)
-    {
-        if (board[i][nCol] != 0)
-        {
-            nRow = i;
-
-            break;
-        }
-    }
-
-    return nRow;
 }
 
 void move(char point1, char point2, int board[5][3], int rows, int cols)
@@ -66,21 +81,6 @@ void move(char point1, char point2, int board[5][3], int rows, int cols)
     board[row2][col2] = value;
 
     showBoard(board, rows, cols);
-}
-
-bool isEmpty(int board[5][3], int rows, int cols)
-{
-    int lastRowIndex = rows - 1;
-    
-    for (int j = 0; j < cols; j++)
-    {
-        if (board[lastRowIndex][j] != 0)
-        {
-            return false;
-        }
-    }
-
-    return true;
 }
 
 void initBoard(int diskCount, int board[5][3], int rows, int nCol)
