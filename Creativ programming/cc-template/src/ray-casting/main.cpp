@@ -21,7 +21,8 @@ int board[board_w][board_h] = {
     { 1, 1, 1, 1, 1, 1, 1, 1 },
 };
  
-struct player_t {
+struct player_t
+{
     Vector2 pos;
     float rotation;
     float speed;
@@ -29,9 +30,12 @@ struct player_t {
     int rays_count;
 };
  
-struct hit_t {
+struct hit_t
+{
     Vector2 pos;
+
     struct { int x, y; } cell_pos;
+
     bool is_horizontal;
 };
  
@@ -42,7 +46,11 @@ bool correct_cell(int x, int y)
  
 hit_t cast_ray(Vector2 pos, float dir)
 {
-    while (dir > PI)  dir -= 2 * PI;
+    while (dir > PI)  
+    {
+        dir -= 2 * PI;
+    }
+
     while (dir < -PI) dir += 2 * PI;
  
     int cell_x = pos.x / cell_size;
@@ -51,20 +59,26 @@ hit_t cast_ray(Vector2 pos, float dir)
     hit_t hit_data_v, hit_data_h;
  
     // Vertical hit
-    for (int k = 0; ; ++k) {
+    for (int k = 0; ; ++k)
+    {
         int shift;
         int k_dir;
-        if (dir > -PI / 2 && dir < PI / 2) {
+        
+        if (dir > -PI / 2 && dir < PI / 2)
+        {
             shift = 1;
             k_dir = 1;
         }
-        else {
+
+        else
+        {
             shift = 0;
             k_dir = -1;
         }
  
         float dx = (cell_x + shift + k * k_dir) * cell_size - pos.x;
         float dy = dx * tan(dir);
+
         Vector2 d = { dx, dy };
         Vector2 hit = d + pos;
  
