@@ -205,19 +205,24 @@ int main()
  
             DrawRectangle(screenWidth, screenHeight / 2, screenWidth, screenHeight / 2, GREEN);
  
-            for (int row = 0; row < board_h; ++row) {
-                for (int col = 0; col < board_w; ++col) {
-                    if (board[col][row] == 1) {
-                        DrawRectangle(col * cell_size, row * cell_size,
-                            cell_size, cell_size, BLACK);
+            for (int row = 0; row < board_h; ++row)
+            {
+                for (int col = 0; col < board_w; ++col)
+                {
+                    if (board[col][row] == 1)
+                    {
+                        DrawRectangle(col * cell_size, row * cell_size, cell_size, cell_size, BLACK);
                     }
                 }
             }
  
-            for (int x = cell_size; x < screenWidth; x += cell_size) {
+            for (int x = cell_size; x < screenWidth; x += cell_size)
+            {
                 DrawLine(x, 0, x, screenHeight, GRAY);
             }
-            for (int y = cell_size; y < screenHeight; y += cell_size) {
+            
+            for (int y = cell_size; y < screenHeight; y += cell_size)
+            {
                 DrawLine(0, y, screenWidth, y, GRAY);
             }
  
