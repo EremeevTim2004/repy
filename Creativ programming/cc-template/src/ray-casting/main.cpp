@@ -21,7 +21,7 @@ int board[board_w][board_h] = {
     { 1, 1, 1, 1, 1, 1, 1, 1 },
 };
  
-Image wall_image = LoadImage("./textures")
+Image wall_image = LoadImage("./textures");
 
 struct player_t
 {
