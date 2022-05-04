@@ -251,11 +251,11 @@ int main()
                 
                 Vector2 column = pos_in_cell / cell_size * wall_image.width;
 
-                int col = column.x;
+                int col = column.y;
 
                 if (hit.is_horizontal)
                 {
-                    col = column.y;
+                    col = column.x;
                 }
 
                 for (int i = 0; i < wall_image.higth; i++)
