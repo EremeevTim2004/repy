@@ -21,12 +21,16 @@ int board[board_w][board_h] = {
     { 1, 1, 1, 1, 1, 1, 1, 1 },
 };
  
+Image wall_image = LoadImage("./textures")
+
 struct player_t
 {
     Vector2 pos;
+
     float rotation;
     float speed;
     float fov;
+    
     int rays_count;
 };
  
