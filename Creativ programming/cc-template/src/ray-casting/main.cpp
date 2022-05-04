@@ -262,7 +262,7 @@ int main()
                 {
                     Color* color_data = (Color*)wall_image.data;
 
-                    Color.pixel = color_data[i * wall_image.higth + col]
+                    Color.pixel = color_data[i * wall_image.width + col]
                 }
 
                 // DrawRectangle(screenWidth + rect_x, (screenHeight - rect_h) / 2, rect_w + 1, rect_h, hit_color);
