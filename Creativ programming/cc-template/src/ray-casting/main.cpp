@@ -21,7 +21,7 @@ int board[board_w][board_h] = {
     { 1, 1, 1, 1, 1, 1, 1, 1 },
 };
  
-Image wall_image = LoadImage("./textures/TECH_1A.png");
+Image images[] = {LoadImage("./textures/TECH_1A.png"), LoadImage("./textures/SUPPORT_3A.png")};
 
 struct player_t
 {
@@ -249,7 +249,7 @@ int main()
  
                 Vector2 pos_in_cell = {hit.pos.x - hit.cell_pos.x * cell_size, hit.pos.y - hit.cell_pos.y * cell_size,};
                 
-                Vector2 column = pos_in_cell / cell_size * wall_image.width;
+                Vector2 column = pos_in_cell / cell_size * cell_image.width;
 
                 int col = column.y;
 
@@ -258,18 +258,14 @@ int main()
                     col = column.x;
                 }
 
-                for (int i = 0; i < wall_image.higth; i++)
+                for (int i = 0; i < cell_image.higth; i++)
                 {
-                    Color* color_data = (Color*)wall_image.data;
+                    Color* color_data = (Color*)cell_image.data;
 
-                    Color.pixel = color_data[i * wall_image.width + col]
+                    Color.pixel = color_data[i * cell_image.width + col]
 
-                    DrawRectangle(screenWidth + rect_x, rect_y + rect_h / wall_image.higth * i, rect_w + 1, rect_h / wall_image.higth + 1, pixel);
+                    DrawRectangle(screenWidth + rect_x, rect_y + rect_h / cell_image.higth * i, rect_w + 1, rect_h / cell_image.higth + 1, pixel);
                 }
-
-
-                
-
 
                 rect_x += rect_w;
             }
