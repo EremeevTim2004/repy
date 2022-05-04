@@ -264,7 +264,7 @@ int main()
 
                     Color.pixel = color_data[i * wall_image.width + col]
 
-                    DrawRectangle(screenWidth + rect_x, (screenHeight - rect_h) / 2, rect_w + 1, rect_h / wall_image.higth, pixel);
+                    DrawRectangle(screenWidth + rect_x, rect_y + rect_h / wall_image.higth * i, rect_w + 1, rect_h / wall_image.higth + 1, pixel);
                 }
 
 
