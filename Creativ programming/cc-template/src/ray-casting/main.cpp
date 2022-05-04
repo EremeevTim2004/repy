@@ -76,26 +76,37 @@ hit_t cast_ray(Vector2 pos, float dir)
         hit_data_v.is_horizontal = false;
  
         if (!correct_cell(cell_hit_x, cell_hit_y))
+        {
             break;
+        }
+
         if (board[cell_hit_x][cell_hit_y] != 0)
+        {
             break;
+        }
     }
  
     // Horizontal hit
-    for (int k = 0; ; ++k) {
+    for (int k = 0; ; ++k)
+    {
         int shift;
         int k_dir;
-        if (dir > -PI && dir < 0) {
+        
+        if (dir > -PI && dir < 0)
+        {
             shift = 0;
             k_dir = -1;
         }
-        else {
+
+        else
+        {
             shift = 1;
             k_dir = 1;
         }
  
         float dy = (cell_y + shift + k * k_dir) * cell_size - pos.y;
         float dx = dy / tan(dir);
+
         Vector2 d = { dx, dy };
         Vector2 hit = d + pos;
  
@@ -107,14 +118,21 @@ hit_t cast_ray(Vector2 pos, float dir)
         hit_data_h.is_horizontal = true;
  
         if (!correct_cell(cell_hit_x, cell_hit_y))
+        {
             break;
+        }
+
         if (board[cell_hit_x][cell_hit_y] != 0)
+        {
             break;
+        }
     }
  
-    if (Vector2Length(hit_data_h.pos - pos) < Vector2Length(hit_data_v.pos - pos)) {
+    if (Vector2Length(hit_data_h.pos - pos) < Vector2Length(hit_data_v.pos - pos))
+    {
         return hit_data_h;
     }
+    
     else {
         return hit_data_v;
     }
@@ -126,29 +144,41 @@ int main()
     SetTargetFPS(60);
  
     player_t player;
+
     player.pos = { screenWidth / 2, screenHeight / 2 };
     player.speed = 100;
     player.rotation = 0;
     player.fov = 60;
     player.rays_count = 240;
+
     float delta_angle = player.fov / player.rays_count;
  
     while (!WindowShouldClose())
     {
         float dt = GetFrameTime();
+
         if (IsKeyDown(KEY_W))
+        {
             player.pos.y -= player.speed * dt;
+        }
+
         if (IsKeyDown(KEY_S))
+        {
             player.pos.y += player.speed * dt;
+        }
+
         if (IsKeyDown(KEY_A))
+        {
             player.pos.x -= player.speed * dt;
+        }
+
         if (IsKeyDown(KEY_D))
+        {
             player.pos.x += player.speed * dt;
- 
-        Vector2 mp = {
-            GetMouseX() - player.pos.x,
-            GetMouseY() - player.pos.y
-        };
+        }
+
+        Vector2 mp = {GetMouseX() - player.pos.x, GetMouseY() - player.pos.y};
+
         player.rotation = Vector2Angle({ 1, 0 }, mp);
  
         BeginDrawing();
@@ -188,28 +218,33 @@ int main()
             for (hit_t& hit : hits)
             {
                 Vector2 hit_delta = hit.pos - player.pos;
-                float dist = hit_delta.x * cos(player.rotation) +
-                    hit_delta.y * sin(player.rotation);
+                float dist = hit_delta.x * cos(player.rotation) + hit_delta.y * sin(player.rotation);
  
                 float rect_h = (cell_size * screenHeight) / dist;
                 float rect_w = (screenWidth / player.fov) * delta_angle;
                 float rect_y = (screenHeight - rect_h) / 2;
  
                 Color hit_color;
+
                 if (hit.is_horizontal)
+                {
                     hit_color = RED;
+                }
+
                 else
+                {
                     hit_color = { 170, 0, 0, 255 };
- 
-                DrawRectangle(
-                    screenWidth + rect_x, (screenHeight - rect_h) / 2,
-                    rect_w + 1, rect_h, hit_color
-                );
+                }
+
+                DrawRectangle(screenWidth + rect_x, (screenHeight - rect_h) / 2, rect_w + 1, rect_h, hit_color);
+                
                 rect_x += rect_w;
             }
         }
+
         EndDrawing();
     }
+
     CloseWindow();
  
     return 0;
