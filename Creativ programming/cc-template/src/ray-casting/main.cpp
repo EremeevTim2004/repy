@@ -242,20 +242,26 @@ int main()
                 float rect_w = (screenWidth / player.fov) * delta_angle;
                 float rect_y = (screenHeight - rect_h) / 2;
  
-                Color hit_color;
+                Vector2 pos_in_cell = {hit.pos.x - hit.cell_pos.x * cell_size, hit.pos.y - hit.cell_pos.y * cell_size,};
+                
+                Vector2 column = pos_in_cell / cell_size * wall_image.width;
+
+                int col = column.x;
 
                 if (hit.is_horizontal)
                 {
-                    hit_color = RED;
+                    col = column.y;
                 }
 
-                else
+                for (int i = 0; i < wall_image.higth; i++)
                 {
-                    hit_color = { 170, 0, 0, 255 };
+                    Color * color_data = (Color*)wall_image.data;
                 }
 
-                DrawRectangle(screenWidth + rect_x, (screenHeight - rect_h) / 2, rect_w + 1, rect_h, hit_color);
+                // DrawRectangle(screenWidth + rect_x, (screenHeight - rect_h) / 2, rect_w + 1, rect_h, hit_color);
                 
+
+
                 rect_x += rect_w;
             }
         }
