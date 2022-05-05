@@ -1,126 +1,18 @@
-Инфопрога 2 сем/prez/prez.pdf
+% для системных и расходных файлов
+*.pdf
+*.toc
+*.synctex.gz
+*.snm
+*.out
+*.nav
+*.log
+*.fls
+*.fdb_latexmk
+*.aux
+*.json
 
-Инфопрога 2 сем/prez/images/1.pdf
-Инфопрога 2 сем/prez/images/2.pdf
-Инфопрога 2 сем/prez/images/3.pdf
-Инфопрога 2 сем/prez/images/4.pdf
+%для разного
+.zip
 
-Инфопрога 2 сем/prez/prez.toc
-Инфопрога 2 сем/prez/prez.synctex.gz
-Инфопрога 2 сем/prez/prez.snm
-Инфопрога 2 сем/prez/prez.out
-Инфопрога 2 сем/prez/prez.nav
-Инфопрога 2 сем/prez/prez.log
-Инфопрога 2 сем/prez/prez.fls
-Инфопрога 2 сем/prez/prez.fdb_latexmk
-Инфопрога 2 сем/prez/prez.aux
-
-Инфопрога 2 сем/ref/Images/1.pdf
-Инфопрога 2 сем/ref/Images/2.pdf
-Инфопрога 2 сем/ref/Images/3.pdf
-Инфопрога 2 сем/ref/Images/4.pdf
-
-Инфопрога 2 сем/ref/ref.aux
-Инфопрога 2 сем/ref/ref.fdb_latexmk
-Инфопрога 2 сем/ref/ref.fls
-Инфопрога 2 сем/ref/ref.log
-Инфопрога 2 сем/ref/ref.pdf
-Инфопрога 2 сем/ref/ref.synctex.gz
-Инфопрога 2 сем/ref/ref.toc
-
-Введение в специальность/referat/ref.aux
-Введение в специальность/referat/ref.fdb_latexmk
-Введение в специальность/referat/ref.fls
-Введение в специальность/referat/ref.log
-Введение в специальность/referat/ref.synctex.gz
-Введение в специальность/referat/ref.pdf
-Введение в специальность/referat/ref.toc
-
-Введение в специальность/presentation/pres.aux
-Введение в специальность/presentation/pres.fdb_latexmk
-Введение в специальность/presentation/pres.fls
-Введение в специальность/presentation/pres.log
-Введение в специальность/presentation/pres.out
-Введение в специальность/presentation/pres.nav
-Введение в специальность/presentation/pres.pdf
-Введение в специальность/presentation/pres.snm
-Введение в специальность/presentation/pres.synctex.gz
-Введение в специальность/presentation/pres.toc
-
-Физика/REF/ref.aux
-Физика/REF/ref.fdb_latexmk
-Физика/REF/ref.fls
-Физика/REF/ref.log
-Физика/REF/ref.synctex.gz
-Физика/REF/ref.pdf
-
-Инфопрога 2 сем/Алгоритмы/Ханойские башни/.vscode/tasks.json
-Инфопрога 2 сем/Алгоритмы/Ханойские башни/output
-
-Физика/secondLab/Lab_2.aux
-Физика/secondLab/Lab_2.fdb_latexmk
-Физика/secondLab/Lab_2.fls
-Физика/secondLab/Lab_2.log
-Физика/secondLab/Lab_2.pdf
-Физика/secondLab/Lab_2.synctex.gz
-
-Creativ programming/cc-template/src/ray-casting/retro-texture-pack-v1.zip
-
-Creativ programming/cc-template/src/ray-casting/textures/FLOOR_1A.png
-Creativ programming/cc-template/src/ray-casting/textures/FLOOR_1B.png
-Creativ programming/cc-template/src/ray-casting/textures/FLOOR_1C.png
-Creativ programming/cc-template/src/ray-casting/textures/FLOOR_1D.png
-Creativ programming/cc-template/src/ray-casting/textures/FLOOR_2A.png
-Creativ programming/cc-template/src/ray-casting/textures/FLOOR_2B.png
-Creativ programming/cc-template/src/ray-casting/textures/FLOOR_2C.png
-Creativ programming/cc-template/src/ray-casting/textures/FLOOR_2D.png
-Creativ programming/cc-template/src/ray-casting/textures/FLOOR_2E.png
-Creativ programming/cc-template/src/ray-casting/textures/LIGHT_1A.png
-Creativ programming/cc-template/src/ray-casting/textures/LIGHT_1B.png
-Creativ programming/cc-template/src/ray-casting/textures/LIGHT_1C.png
-Creativ programming/cc-template/src/ray-casting/textures/PIPES_1.png
-Creativ programming/cc-template/src/ray-casting/textures/RIVET_1A.png
-Creativ programming/cc-template/src/ray-casting/textures/RIVET_1B.png
-Creativ programming/cc-template/src/ray-casting/textures/RIVET_2A.png
-Creativ programming/cc-template/src/ray-casting/textures/RIVET_2B.png
-Creativ programming/cc-template/src/ray-casting/textures/STEEL_1A.png
-Creativ programming/cc-template/src/ray-casting/textures/STEEL_1B.png
-Creativ programming/cc-template/src/ray-casting/textures/STEEL_2A.png
-Creativ programming/cc-template/src/ray-casting/textures/STEEL_2B.png
-Creativ programming/cc-template/src/ray-casting/textures/STONE_1A.png
-Creativ programming/cc-template/src/ray-casting/textures/STONE_1B.png
-Creativ programming/cc-template/src/ray-casting/textures/STONE_2A.png
-Creativ programming/cc-template/src/ray-casting/textures/STONE_2B.png
-Creativ programming/cc-template/src/ray-casting/textures/SUPPORT_1.png
-Creativ programming/cc-template/src/ray-casting/textures/SUPPORT_2.png
-Creativ programming/cc-template/src/ray-casting/textures/SUPPORT_3.png
-Creativ programming/cc-template/src/ray-casting/textures/SUPPORT_4.png
-Creativ programming/cc-template/src/ray-casting/textures/TECH_1A.png
-Creativ programming/cc-template/src/ray-casting/textures/TECH_1B.png
-Creativ programming/cc-template/src/ray-casting/textures/TECH_1C.png
-Creativ programming/cc-template/src/ray-casting/textures/TECH_1D.png
-Creativ programming/cc-template/src/ray-casting/textures/TECH_1E.png
-Creativ programming/cc-template/src/ray-casting/textures/TECH_1F.png
-Creativ programming/cc-template/src/ray-casting/textures/TECH_2A.png
-Creativ programming/cc-template/src/ray-casting/textures/TECH_2B.png
-Creativ programming/cc-template/src/ray-casting/textures/TECH_3A.png
-Creativ programming/cc-template/src/ray-casting/textures/TECH_3B.png
-Creativ programming/cc-template/src/ray-casting/textures/TECH_3C.png
-Creativ programming/cc-template/src/ray-casting/textures/TECH_3D.png
-Creativ programming/cc-template/src/ray-casting/textures/TECH_3E.png
-Creativ programming/cc-template/src/ray-casting/textures/TECH_3F.png
-Creativ programming/cc-template/src/ray-casting/textures/TECH_3G.png
-Creativ programming/cc-template/src/ray-casting/textures/TECH_3H.png
-Creativ programming/cc-template/src/ray-casting/textures/TECH_3I.png
-Creativ programming/cc-template/src/ray-casting/textures/TECH_3J.png
-Creativ programming/cc-template/src/ray-casting/textures/TECH_3K.png
-Creativ programming/cc-template/src/ray-casting/textures/TECH_4A.png
-Creativ programming/cc-template/src/ray-casting/textures/TECH_4B.png
-Creativ programming/cc-template/src/ray-casting/textures/TECH_4C.png
-Creativ programming/cc-template/src/ray-casting/textures/TECH_4D.png
-Creativ programming/cc-template/src/ray-casting/textures/TECH_4E.png
-Creativ programming/cc-template/src/ray-casting/textures/TECH_4F.png
-Creativ programming/cc-template/src/ray-casting/textures/TECH_5A.png
-Creativ programming/cc-template/src/ray-casting/textures/TECH_5B.png
-Creativ programming/cc-template/src/ray-casting/textures/WARN_1.png
-Creativ programming/cc-template/src/ray-casting/textures/WARN_2.png
+%для картинок
+.png
