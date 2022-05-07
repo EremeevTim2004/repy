@@ -10,6 +10,8 @@
 *.aux
 *.json
 
+*.exe
+
 *.mk
 
 *.zip
