@@ -1,306 +1,463 @@
 #define RAYEXT_IMPLEMENTATION
 #include <raylib-ext.hpp>
+#include <algorithm>
 #include <vector>
 #include <string>
 #include <fstream>
-#include <filesystem>
+#include <map>
+#include <iostream>
 
-namespace fs = std::filesystem;
+const int screenWidth = 720;
+const int screenHeight = 720;
 
-#define SCALE_DELTA 0.3
+int board_w = 8;
+int board_h = 8;
 
-const Color BG_COLOR = BLACK;
-const Color ACTIVE_COLOR = GREEN;
-const Color BORDER_COLOR = DARKGRAY;
+int cell_size = screenWidth / board_w;
 
-struct context_t
+std::vector<std::vector<int>> board;
+std::map<int, Image> images;
+
+Image floor_texture = LoadImage("./textures/FLOOR_1A.png");
+Image ceiling_texture = LoadImage("./textures/LIGHT_1C.png");
+
+/* Image images[] = {
+    LoadImage("./textures/TECH_1A.png"), // NULL
+    LoadImage("./textures/TECH_1A.png"),
+    LoadImage("./textures/SUPPORT_3.png"),
+}; */
+
+struct player_t
 {
-    Vector2 offset;
-    struct { int rows, cols; } board_size;
-    float base_cell_size;
-    float scale;
-    // int *board;
-    std::vector<std::vector<int>> board;
-    int images_loaded;
-    std::vector<Image> images_base;
-    std::vector<Image> images_resized;
-    std::vector<bool> needs_resizing;
-    std::vector<Texture> textures;
-    std::vector<std::string> filenames;
+    Vector2 pos;
 
-    Texture gui_current_tecture;
-    bool gui_enabled;
+    float rotation;
+    float speed;
+    float fov;
 
-    void
-    reload_board()
-    {
-        auto new_board = std::vector(this->board_size.rows, std::vector(this->board_size.cols, -1));
-        int max_row = std::min(int(this->board.size()), this->board_size.rows);
-        int max_col = std::min(int(this->board[0].size()), this->board_size.cols);
-        for (int i = 0; i < max_row; ++i)
-            for (int j = 0; j < max_col; ++j)
-            {
-                new_board[i][j] = this->board[i][j];
-            }
-
-        this->board = new_board;
-    }
-
-    std::string
-    get_map_data()
-    {
-        std::string data = "";
-        data.append(std::to_string(this->board_size.rows)).append(" ");
-        data.append(std::to_string(this->board_size.cols)).append(" ");
-
-        std::vector<bool> used(this->images_loaded, false);
-        int count = 0;
-        std::string board_string = "";
-        for (int i = 0; i < int(this->board.size()); ++i)
-        {
-            for (int j = 0; j < int(this->board[i].size()); ++j)
-            {
-                int cell = this->board[i][j];
-                if (cell != -1 && !used[cell])
-                {
-                    used[cell] = true;
-                    count++;
-                }
-                board_string.append(std::to_string(cell));
-                if (j == int(this->board[i].size()) - 1)
-                    board_string.append("\n");
-                else
-                    board_string.append(" ");
-            }
-        }
-        data.append(std::to_string(count)).append("\n");
-        for (int i = 0; i < used.size(); ++i)
-            if (used[i])
-            {
-                data.append(std::to_string(i)).append(" ");
-                data.append(this->filenames[i]).append("\n");
-            }
-        data.append(board_string);
-
-        return data;
-    }
+    int rays_count;
 };
+
+struct hit_t
+{
+    Vector2 pos;
+
+    struct { int x, y; } cell_pos;
+    
+    bool is_horizontal;
+    
+    float angle;
+};
+
+bool correct_cell(int x, int y)
+{
+    return (x >= 0 && x < board_w) && (y >= 0 && y < board_h);
+}
+
+float fix_angle(float angle)
+{
+    while (angle > PI) 
+    {
+        angle -= 2 * PI;
+    }
+
+    while (angle < -PI) 
+    {
+        angle += 2 * PI;
+    }
+
+    return angle;
+}
+
+hit_t cast_ray(Vector2 pos, float dir)
+{
+    dir = fix_angle(dir);
+
+    int cell_x = pos.x / cell_size;
+    int cell_y = pos.y / cell_size;
+
+    hit_t hit_data_v, hit_data_h;
+
+    // Vertical hit
+    for (int k = 0; ; ++k)
+    {
+        int shift;
+        int k_dir;
+
+        if (dir > -PI / 2 && dir < PI / 2)
+        {
+            shift = 1;
+
+            k_dir = 1;
+        }
+
+        else
+        {
+            shift = 0;
+
+            k_dir = -1;
+        }
+
+        float dx = (cell_x + shift + k * k_dir) * cell_size - pos.x;
+        float dy = dx * tan(dir);
+
+        Vector2 d = { dx, dy };
+        Vector2 hit = d + pos;
+
+        int cell_hit_x = int(hit.x / cell_size) + shift - 1;
+        int cell_hit_y = int(hit.y / cell_size);
+
+        hit_data_v.pos = hit;
+        hit_data_v.cell_pos = { cell_hit_x, cell_hit_y };
+        hit_data_v.is_horizontal = false;
+        hit_data_v.angle = dir;
+
+        if (!correct_cell(cell_hit_x, cell_hit_y))
+        {
+            break;
+        }
+        if (board[cell_hit_x][cell_hit_y] != -1)
+        {
+            break;
+        }
+    }
+
+    // Horizontal hit
+    for (int k = 0; ; ++k)
+    {
+        int shift;
+        int k_dir;
+
+        if (dir > -PI && dir < 0)
+        {
+            shift = 0;
+
+            k_dir = -1;
+        }
+
+        else
+        {
+            shift = 1;
+            
+            k_dir = 1;
+        }
+
+        float dy = (cell_y + shift + k * k_dir) * cell_size - pos.y;
+        float dx = dy / tan(dir);
+
+        Vector2 d = { dx, dy };
+        Vector2 hit = d + pos;
+
+        int cell_hit_x = int(hit.x / cell_size);
+        int cell_hit_y = int(hit.y / cell_size) + shift - 1;
+
+        hit_data_h.pos = hit;
+        hit_data_h.cell_pos = { cell_hit_x, cell_hit_y };
+        hit_data_h.is_horizontal = true;
+        hit_data_h.angle = dir;
+
+        if (!correct_cell(cell_hit_x, cell_hit_y))
+        {
+            break;
+        }
+
+        if (board[cell_hit_x][cell_hit_y] != -1)
+        {
+            break;
+        }
+    }
+
+    if (Vector2Length(hit_data_h.pos - pos) < Vector2Length(hit_data_v.pos - pos))
+    {
+        return hit_data_h;
+    }
+
+    else
+    {
+        return hit_data_v;
+    }
+}
+
+bool check_collision(Vector2 position, float radius)
+{
+    for (float angle = -PI; angle < PI; angle += PI / 4)
+    {
+        Vector2 check = position + Vector2Rotate({ radius, 0 }, angle);
+
+        int cell_x = check.x / cell_size;
+        int cell_y = check.y / cell_size;
+        
+        if (board[cell_x][cell_y] != -1)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+void parse_map(std::string filename)
+{
+    int rows, cols;
+    int texture_count;
+    
+    std::ifstream map_file(filename);
+
+    map_file >> rows >> cols >> texture_count;
+
+    board_w = rows;
+    board_h = cols;
+
+    if (rows > cols)
+    {
+        cell_size = screenHeight / rows;
+    }
+
+    else
+    {
+        cell_size = screenWidth / cols;
+    }
+
+    for (int i = 0; i < texture_count; ++i)
+    {
+        int texture_id;
+     
+        std::string texture_path;
+     
+        map_file >> texture_id >> texture_path;
+     
+        images[texture_id] = LoadImage(texture_path);
+    }
+
+    board = std::vector(rows, std::vector(cols, -1));
+
+    for (int i = 0; i < rows; ++i)
+    {
+        for (int j = 0; j < cols; ++j)
+        {
+            map_file >> board[i][j];
+        }
+    }
+}
 
 int main()
 {
-    const int screenWidth = 640;
-    const int screenHeight = 480;
-
-    InitWindow(screenWidth, screenHeight, "GDSC: Creative Coding");
+    InitWindow(screenWidth * 2, screenHeight, "GDSC: Creative Coding");
     SetTargetFPS(60);
 
-    context_t context;
-    context.offset = {0, 0};
-    context.board_size = {10, 10};
-    context.base_cell_size = 40;
-    context.scale = 1;
-    context.board = std::vector(context.board_size.rows, std::vector(context.board_size.cols, -1));
+    std::string map_filename = "./test.map";
 
-    context.board[0][0] = 0;
-    context.board[1][0] = 0;
-    context.images_loaded = 0;
-    context.images_base = std::vector<Image>();
+    parse_map(map_filename);
 
-    std::string path = "./textures";
-    for (const auto &entry : fs::directory_iterator(path))
-    {
-        Image texture = LoadImage(entry.path());
-        context.images_base.push_back(texture);
-        context.filenames.push_back(entry.path());
-        context.images_loaded++;
-    }
-    context.images_resized = std::vector<Image>(context.images_loaded);
-    context.needs_resizing = std::vector<bool>(context.images_loaded, true);
-    context.textures = std::vector<Texture>(context.images_loaded);
-    context.gui_enabled = false;
+    player_t player;
 
-    int listViewActive = -1;
-    int listViewScrollIndex = 0;
+    player.pos = { screenWidth / 2, screenHeight / 2 };
+    player.speed = 100;
+    player.rotation = 0;
+    player.fov = 60;
+    player.rays_count = 240;
 
-    bool spinner_rows_edit = false;
-    bool spinner_cols_edit = false;
+    float delta_angle = player.fov / player.rays_count;
 
-    char filename_text[32] = "./test.map";
-    bool filename_edit = false;
+    bool mouse_2d = false;
 
     while (!WindowShouldClose())
     {
+        float dt = GetFrameTime();
+
+        Vector2 move = { 0, 0 };
+
+        if (mouse_2d)
+        {
+            if (IsKeyDown(KEY_W))
+            {
+                move.y -= player.speed * dt;
+            }
+            if (IsKeyDown(KEY_S))
+            {
+                move.y += player.speed * dt;
+            }
+            if (IsKeyDown(KEY_A))
+            {
+                move.x -= player.speed * dt;
+            }
+            if (IsKeyDown(KEY_D))
+            {
+                move.x += player.speed * dt;
+            }
+
+            Vector2 mp = {GetMouseX() - player.pos.x, GetMouseY() - player.pos.y};
+
+            player.rotation = Vector2Angle({ 1, 0 }, mp);
+        }
+
+        else
+        {
+            DisableCursor();
+            
+            float delta = GetMouseDelta().x;
+
+            player.rotation += delta * dt * 0.1;
+
+            Vector2 dir = Vector2Rotate({ 1, 0 }, player.rotation);
+            Vector2 forward = dir * (player.speed * dt);
+            Vector2 right = Vector2Rotate(forward, PI / 2);
+
+            if (IsKeyDown(KEY_W))
+            {
+                move = forward;
+            }
+            if (IsKeyDown(KEY_S))
+            {
+                move = -forward;
+            }
+            if (IsKeyDown(KEY_A))
+            {
+                move = -right;
+            }
+            if (IsKeyDown(KEY_D))
+            {
+                move = right;
+            }
+        }
+
+        player.pos += move;
+        
+        if (check_collision(player.pos, 15))
+        {
+            player.pos -= move;
+        }
+
         BeginDrawing();
         {
-            if (!context.gui_enabled && IsMouseButtonDown(MOUSE_RIGHT_BUTTON))
-            {
-                Vector2 md = GetMouseDelta();
-                context.offset += md;
-            }
-
-            if (!context.gui_enabled && IsKeyPressed(KEY_EQUAL))
-            {
-                context.scale += SCALE_DELTA;
-                for (int i = 0; i < context.images_loaded; ++i)
-                    context.needs_resizing[i] = true;
-            }
-            else if (!context.gui_enabled && IsKeyPressed(KEY_MINUS))
-            {
-                if (context.scale - SCALE_DELTA > 0.3)
-                {
-                    context.scale -= SCALE_DELTA;
-                    for (int i = 0; i < context.images_loaded; ++i)
-                        context.needs_resizing[i] = true;
-                }
-            }
-
-            float sq = context.base_cell_size * context.scale;
-            Vector2 sq_dim = { sq, sq };
-
-            if (!context.gui_enabled && IsMouseButtonDown(MOUSE_LEFT_BUTTON))
-            {
-                Vector2 mp = { float(GetMouseX()), float(GetMouseY()) };
-                mp -= context.offset;
-                int cell_row = mp.y / sq;
-                int cell_col = mp.x / sq;
-                if (cell_row >= 0 && cell_row < context.board_size.rows &&
-                    cell_col >= 0 && cell_col < context.board_size.cols)
-                {
-                    context.board[cell_row][cell_col] = listViewActive;
-                }
-            }
-
             ClearBackground(BLACK);
+            
+            DrawRectangle(screenWidth, screenHeight / 2, screenWidth, screenHeight / 2, BLACK);
 
-            // Draw map 
-            for (int col = 0; col < context.board_size.cols; ++col)
-                for (int row = 0; row < context.board_size.rows; ++row)
-                    if (context.board[row][col] != -1)
+            for (int row = 0; row < board_h; ++row)
+            {
+                for (int col = 0; col < board_w; ++col)
+                {
+                    if (board[col][row] != -1)
                     {
-                        Vector2 pos = { float(col), float(row) };
-                        pos = pos * sq + context.offset;
-                        int cell = context.board[row][col];
-                        Texture texture;
-                        if (context.needs_resizing[cell])
-                        {
-                            UnloadTexture(context.textures[cell]);
-                            Image *resized = &context.images_resized[cell];
-                            *resized = ImageCopy(context.images_base[cell]);
-                            ImageResize(resized, sq, sq);
-                            context.textures[cell] = LoadTextureFromImage(*resized);
-                            texture = context.textures[cell];
-                            context.needs_resizing[cell] = false;
-                        }
-                        else
-                        {
-                            texture = context.textures[cell];
-                        }
-                        DrawTextureV(texture, pos, WHITE);
+                        DrawRectangle(col * cell_size, row * cell_size, cell_size, cell_size, BLACK);
                     }
 
-            // Draw horizontal lines
-            for (int col = 0; col <= context.board_size.cols; ++col)
-            {
-                Vector2 p0 = { 0, col * sq };
-                Vector2 p1 = { context.board_size.rows * sq, col * sq };
-                DrawLineV(p0 + context.offset, p1 + context.offset, BORDER_COLOR);
+                    else
+                    {
+                        DrawRectangle(col * cell_size, row * cell_size, cell_size, cell_size, WHITE);
+                    }
+                }
             }
-            for (float x = 0; x <= screenWidth; x += sq)
-            for (int row = 0; row <= context.board_size.rows; ++row)
+
+            for (int x = cell_size; x < screenWidth; x += cell_size)
             {
-                Vector2 p0 = { row * sq, 0 };
-                Vector2 p1 = { row * sq, context.board_size.cols * sq };
-                DrawLineV(p0 + context.offset, p1 + context.offset, BORDER_COLOR);
+                DrawLine(x, 0, x, screenHeight, GRAY);
+            }
+
+            for (int y = cell_size; y < screenHeight; y += cell_size)
+            {
+                DrawLine(0, y, screenWidth, y, GRAY);
+            }
+
+            DrawCircleV(player.pos, 14, RED);
+
+            DrawLineEx(player.pos, player.pos + Vector2Rotate({ 1,0 }, player.rotation) * 25, 5, BLUE);
+
+            std::vector<hit_t> hits;
+
+            for (float angle = -player.fov / 2; angle < player.fov / 2; angle += delta_angle)
+            {
+                hit_t hit = cast_ray(player.pos, player.rotation + angle * DEG2RAD);
+
+                DrawLineEx(player.pos, hit.pos, 2, BLUE);
+                
+                hits.push_back(hit);
+            }
+
+            float rect_x = 0;
+
+            for (hit_t& hit : hits)
+            {
+                Vector2 hit_delta = hit.pos - player.pos;
+
+                float dist = hit_delta.x * cos(player.rotation) + hit_delta.y * sin(player.rotation);
+
+                int shading = int(128.0 * dist / 900);
+
+                float rect_h = (cell_size * screenHeight) / dist;
+                float rect_w = (screenWidth / player.fov) * delta_angle;
+                float rect_y = (screenHeight - rect_h) / 2;
+
+                int image_idx = board[hit.cell_pos.x][hit.cell_pos.y];
+
+                Image cell_image = images[image_idx];
+
+                Vector2 pos_in_cell = {hit.pos.x - hit.cell_pos.x * cell_size, hit.pos.y - hit.cell_pos.y * cell_size,};
+
+                Vector2 column = pos_in_cell / cell_size * cell_image.width;
+
+                int col = column.y;
+
+                if (hit.is_horizontal)
+                {
+                    col = column.x;
+                }
+                
+                for (int i = 0; i < cell_image.height; ++i)
+                {
+                    Color* color_data = (Color*)cell_image.data;
+                    
+                    Color pixel = color_data[i * cell_image.width + col];
+
+                    pixel.r = std::clamp(pixel.r - shading, 0, 255);
+                    pixel.g = std::clamp(pixel.g - shading, 0, 255);
+                    pixel.b = std::clamp(pixel.b - shading, 0, 255);
+
+                    DrawRectangle(screenWidth + rect_x, rect_y + rect_h / cell_image.height * i, rect_w + 1, rect_h / cell_image.height + 1, pixel);
+                }
+
+                for (int row = rect_y + rect_h; row < screenHeight; ++row)
+                {
+                    float dy = row - screenHeight / 2;
+                    float raFix = cosf(fix_angle(player.rotation - hit.angle));
+                    
+                    int magic = 300;
+                    int tx = player.pos.x / 2 + cosf(hit.angle) * magic * floor_texture.width / dy / raFix;
+                    int ty = player.pos.y / 2 + sinf(hit.angle) * magic * floor_texture.height / dy / raFix;
+
+                    shading = int(1.0 / float(row) * screenHeight * 28);
+
+                    int fw = floor_texture.width;
+                    
+                    Color* floor_data = (Color*)floor_texture.data;
+                    Color floor_pixel = floor_data[(ty & (fw - 1)) * fw + (tx & (fw - 1))];
+                    
+                    floor_pixel.r = std::clamp(floor_pixel.r - shading, 0, 255);
+                    floor_pixel.g = std::clamp(floor_pixel.g - shading, 0, 255);
+                    floor_pixel.b = std::clamp(floor_pixel.b - shading, 0, 255);
+                    
+                    DrawRectangle(screenWidth + rect_x, row + rect_h / floor_texture.height, rect_w + 1, rect_h / floor_texture.height + 1, floor_pixel);
+
+                    int cw = ceiling_texture.width;
+
+                    Color* ceiling_data = (Color*)ceiling_texture.data;
+                    Color ceiling_pixel = ceiling_data[(ty & (cw - 1)) * cw + (tx & (cw - 1))];
+                    
+                    ceiling_pixel.r = std::clamp(ceiling_pixel.r - shading, 0, 255);
+                    ceiling_pixel.g = std::clamp(ceiling_pixel.g - shading, 0, 255);
+                    ceiling_pixel.b = std::clamp(ceiling_pixel.b - shading, 0, 255);
+                    
+                    DrawRectangle(screenWidth + rect_x, screenHeight - row - rect_h / ceiling_texture.height, rect_w + 1, rect_h / ceiling_texture.height + 1, ceiling_pixel);
+                }
+
+                rect_x += rect_w;
             }
         }
-        {
-            if (IsKeyPressed(KEY_SPACE))
-            {
-                context.gui_enabled = !context.gui_enabled;
-            }
 
-            if (context.gui_enabled) 
-            {
-                DrawRectangleRec(Rectangle { 10, 10, 125, 30 }, WHITE);
-                auto old_size = context.board_size;
-                if (GuiSpinner(
-                    (Rectangle){ 10, 10, 125, 30 },
-                    NULL, &context.board_size.rows, 
-                    1, 100, spinner_rows_edit))
-                {
-                    spinner_rows_edit = !spinner_rows_edit;
-                }
-                DrawRectangleRec(Rectangle { 145, 10, 125, 30 }, WHITE);
-                if (GuiSpinner(
-                    (Rectangle){ 145, 10, 125, 30 },
-                    NULL, &context.board_size.cols,
-                    1, 100, spinner_cols_edit))
-                {
-                    spinner_cols_edit = !spinner_cols_edit;
-                }
-
-                if (old_size.rows != context.board_size.rows ||
-                    old_size.cols != context.board_size.cols)
-                {
-                    context.reload_board();
-                }
-
-                DrawRectangleRec(Rectangle { 280, 10, 125, 30 }, WHITE);
-                if (GuiTextBox(
-                    (Rectangle){ 280, 10, 125, 30 },
-                    filename_text, 32, filename_edit))
-                {
-                    filename_edit = !filename_edit;
-                }
-
-                if (GuiButton(Rectangle { 415, 10, 125, 30 }, "Export Map"))
-                {
-                    std::ofstream map_file;
-                    map_file.open (filename_text);
-                    map_file << context.get_map_data();
-                    map_file.close();
-                }
-
-                std::string menu = "";
-                for (int i = 0; i < context.images_loaded; ++i)
-                {
-                    menu.append(context.filenames[i]);
-                    if (i != context.images_loaded)
-                        menu.append(";");
-                }
-                int prev_listViewActive = listViewActive;
-                listViewActive = GuiListView(
-                    (Rectangle){ 10, 50, 200, screenHeight - 60 },
-                    menu.c_str(),
-                    &listViewScrollIndex,
-                    listViewActive
-                );
-
-                if (prev_listViewActive != listViewActive)
-                {
-                    UnloadTexture(context.gui_current_tecture);
-                    Image image = ImageCopy(context.images_base[listViewActive]);
-                    ImageResize(&image, 400, 400);
-                    context.gui_current_tecture = LoadTextureFromImage(image);
-                }
-                if (listViewActive != -1)
-                {
-                    DrawRectangle(
-                        10 + 200 + (screenWidth - 210) / 2 - 200 - 2,
-                        40 + (screenHeight - 40) / 2 - 200 - 2,
-                        404, 404, WHITE
-                    );
-                    DrawTexture(
-                        context.gui_current_tecture,
-                        10 + 200 + (screenWidth - 210) / 2 - 200, 
-                        40 + (screenHeight - 40) / 2 - 200,
-                        WHITE
-                    );
-                }
-            }
-        }
         EndDrawing();
     }
+
     CloseWindow();
 
     return 0;
