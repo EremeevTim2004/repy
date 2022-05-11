@@ -4,6 +4,7 @@
 #include <string>
 #include <fstream>
 #include <filesystem>
+
 namespace fs = std::filesystem;
 
 #define SCALE_DELTA 0.3
