@@ -10,6 +10,8 @@
 *.aux
 *.json
 
+*.map
+
 *.exe
 
 *.mk
@@ -17,5 +19,3 @@
 *.zip
 
 *.png
-
-output
