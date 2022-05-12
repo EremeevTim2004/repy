@@ -9,6 +9,7 @@
 *.fdb_latexmk
 *.aux
 *.json
+*.d
 
 *.map
 
