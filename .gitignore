@@ -1,4 +1,6 @@
+*.gif
 *.pdf
+
 *.toc
 *.synctex.gz
 *.snm
@@ -10,15 +12,10 @@
 *.aux
 *.json
 *.d
-
 *.map
-
 *.exe
-
 *.mk
-
 *.zip
-
 *.png
 
 output
