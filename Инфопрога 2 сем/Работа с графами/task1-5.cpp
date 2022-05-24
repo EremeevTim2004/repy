@@ -301,7 +301,7 @@ int main()
 {
     int task;
 
-    std::cout << "" << std::endl;
+    std::cout << "Введите номер задания (1-5)" << std::endl << ">>";
     std::cin >> task;
 
     switch(task)
