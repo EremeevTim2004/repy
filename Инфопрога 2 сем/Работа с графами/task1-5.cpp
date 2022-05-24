@@ -116,14 +116,14 @@ void task1()
 {
     int n;
 
-    cout << "введите колиество вершин\n";
+    cout << "введите колиество вершин\n" << ">>";
     cin >> n;
 
     Graph graph(n);
 
     int colR;
 
-    cout << "введите количетсво ребер\n";
+    cout << "введите количетсво ребер\n" << ">>";
     cin >> colR;
 
     for (int i = 0; i < colR; i++)
@@ -153,14 +153,14 @@ void task2()
 {
     int n;
     
-    cout << "введите колиество вершин\n";
+    cout << "введите колиество вершин\n" << ">>";
     cin >> n;
     
     Graph graph(n);
 
     int colR;
 
-    cout << "введите количетсво ребер\n";
+    cout << "введите количетсво ребер\n" << ">>";
     cin >> colR;
 
     for (int i = 0; i < colR; i++)
@@ -179,7 +179,6 @@ void task2()
     cin >> s1 >> s2;
 
     graph.addEdge(s1, s2);
-
 }
 
 /*
@@ -190,21 +189,23 @@ void task3()
 {
     int n;
     
-    cout << "введите колиество вершин\n";
+    cout << "введите колиество вершин\n" << ">>";
     cin >> n;
 
     Graph graph(n);
     
     int colR;
 
-    cout << "введите количетсво ребер\n";
+    cout << "введите количетсво ребер\n" << ">>";
     cin >> colR;
 
     for (int i = 0; i < colR; i++)
     {
-        cout << "введите 2 вершины между которыми есть ребро\n";
         int s1, s2;
+
+        cout << "введите 2 вершины между которыми есть ребро\n";
         cin >> s1 >> s2;
+        
         graph.addEdge(s1, s2);
     }
 
@@ -226,14 +227,14 @@ void task4()
 {
     int n;
 
-    cout << "введите колиество вершин\n";
+    cout << "введите колиество вершин\n" << ">>";
     cin >> n;
     
     Graph graph(n);
 
     int colR;
 
-    cout << "введите количетсво ребер\n";
+    cout << "введите количетсво ребер\n" << ">>";
     cin >> colR;
 
     for (int i = 0; i < colR; i++)
@@ -268,14 +269,14 @@ void task5()
 {
     int n;
 
-    cout << "введите колиество вершин\n";
+    cout << "введите колиество вершин\n" << ">>";
     cin >> n;
 
     Graph graph(n);
 
     int colR;
 
-    cout << "введите количетсво ребер\n";
+    cout << "введите количетсво ребер\n" << ">>";
     cin >> colR;
 
     for (int i = 0; i < colR; i++)
