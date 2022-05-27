@@ -21,23 +21,6 @@ struct date_of_birth
     int y;
 };
 
-/*
-* Метод деления по месяцу рождения
-*/
-void task_1()
-{
-
-}
-
-/*
-* Основная - линейное хэширование
-* Вспомогательная - метод умножения по году
-*/
-void task_2()
-{
-
-} 
-
 // Функция исправляющая кализию
 // хз как она должна работать
 void ColishionFixer()
@@ -54,6 +37,23 @@ int OpenHashMaker(string array[], int arraySize, int hashSize)
         hashArray[i] = (int)(data.date_of_birth.d + data.date_of_birt.m + data.date_of_birth.y) / hashSize;
     }
 }
+
+/*
+* Метод деления по месяцу рождения
+*/
+void task_1()
+{
+
+}
+
+/*
+* Основная - линейное хэширование
+* Вспомогательная - метод умножения по году
+*/
+void task_2()
+{
+
+} 
 
 int main()
 {
