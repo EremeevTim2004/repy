@@ -5,26 +5,14 @@ using namespace std;
 
 int main()
 {
-	vector <vector <int>> A;
-	vector <vector <int>> B;
+	vector <vector <int>> A(4);
+	vector <vector <int>> B(4);
 	
 	// Заполнение матрицы А
-	for (int i = 0; i < 2; i++)
-	{
-		for (int j = 0; j < 2; j ++)
-		{
-			std::cin >> A[j][i];
-		}
-	}
+	std::cin >> A[0][0] >> A[0][1] >> A[1][0] >> A[1][1];
 
 	// Заполнение матрицы В
-	for (int i = 0; i < 2; i++)
-	{
-		for (int j = 0; j < 2; j ++)
-		{
-			std::cin >> B[j][i];
-		}
-	}
+	std::cin >> B[0][0] >> B[0][1] >> B[1][0] >> B[1][1];
 
 	// Вывод исходных матриц
 	std::cout << "Matrix A:" << std::endl;
