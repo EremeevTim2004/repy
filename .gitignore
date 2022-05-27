@@ -18,4 +18,6 @@
 *.zip
 *.png
 
+*.txt
+
 output
