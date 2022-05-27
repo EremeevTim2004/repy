@@ -4,6 +4,23 @@
 
 using namespace std;
 
+struct data
+{
+    string Name;
+    string post;
+    int date_of_birth;
+    int experience;
+    int salary;
+};
+
+
+struct date_of_birth
+{
+    int d;
+    int m;
+    int y;
+};
+
 /*
 * Метод деления по месяцу рождения
 */
@@ -28,19 +45,24 @@ void ColishionFixer()
 
 }
 
-void OpenHashMaker(string array[], int arraySize, int hashSize)
+int OpenHashMaker(string array[], int arraySize, int hashSize)
 {
+    int hashArray[hashSize];
 
+    for (int i = 0; i < arraySize; i ++)
+    {
+        hashArray[i] = (int)(data.date_of_birth.d + data.date_of_birt.m + data.date_of_birth.y) / hashSize;
+    }
 }
 
 int main()
 {
-    int chouser;
+    int task;
 
     std::cout << "" << std::endl << ">>";
-    std::cin >> chouser;
+    std::cin >> task;
 
-    switch (chouser)
+    switch (task)
     {
         // открытое хэширование
         case 1:
