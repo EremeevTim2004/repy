@@ -8,7 +8,7 @@ struct data
 {
     string Name;
     string post;
-    int date_of_birth;
+    struct date_of_birth;
     int experience;
     int salary;
 };
@@ -34,8 +34,18 @@ int OpenHashMaker(string array[], int arraySize, int hashSize)
 
     for (int i = 0; i < arraySize; i ++)
     {
-        hashArray[i] = (int)(data.date_of_birth.d + data.date_of_birt.m + data.date_of_birth.y) / hashSize;
+        hashArray[i] = (date_of_birth.d + date_of_birt.m + date_of_birth.y) / hashSize;
     }
+}
+
+void FReader()
+{
+
+}
+
+void FWriter()
+{
+    
 }
 
 /*
