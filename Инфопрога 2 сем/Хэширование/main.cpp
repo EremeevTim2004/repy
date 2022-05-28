@@ -28,22 +28,38 @@ void ColishionFixer()
 
 }
 
-int OpenHashMaker(string array[], int arraySize, int hashSize)
+pair <int, int> OpenHashMaker(string Array[], int ArraySize, int HashTableSize)
 {
-    int hashArray[hashSize];
+    pair<int, int> HashTable[HashTableSize];
 
-    for (int i = 0; i < arraySize; i ++)
+    int day_of_birth = ...;
+    int month_of_birth = ...;
+    int year_of_birth = ...;
+
+    for (int i = 0; i < ArraySize; i ++)
     {
-        hashArray[i] = (date_of_birth.d + date_of_birt.m + date_of_birth.y) / hashSize;
+        HashTable[i].first = (day_of_birth + month_of_birth + year_of_birth) % HashTableSize;
+        HashTable[i].second = day_of_birth + month_of_birth + year_of_birth;
+    }
+
+    // проверка наличия колизии
+    if (...)
+    {
+        ColishionFixer();
+    }
+
+    for (int i = 0; i < HashTableSize; i ++)
+    {
+        return HashTable[i];
     }
 }
 
-void FReader()
+void FReader(string IFileName)
 {
 
 }
 
-void FWriter()
+void FWriter(string OFileName)
 {
     
 }
@@ -51,7 +67,7 @@ void FWriter()
 /*
 * Метод деления по месяцу рождения
 */
-void task_1()
+void task_1(string Array[], int ArraySize)
 {
 
 }
@@ -67,6 +83,10 @@ void task_2()
 
 int main()
 {
+    ifstream fin("Data.txt");
+    ofstream fout("HashTable.txt");
+
+
     int task;
 
     std::cout << "" << std::endl << ">>";
