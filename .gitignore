@@ -21,7 +21,11 @@
 *.txt
 
 output
-
+output_1
+output_2
 StarterForFirstSortTask
 StarterForSecondSortTask
 StarterForThirdSortTask
+StarterForFirstTask
+StarterForSecondTask
+StarterForThirdTask
