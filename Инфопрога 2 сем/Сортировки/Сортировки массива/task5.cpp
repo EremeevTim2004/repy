@@ -1,11 +1,11 @@
 #include <iostream>
-#include <cstdlib>
-#include <vector>
 #include <fstream>
-#include <cmath>
-#include <string>
+#include <cstdlib>
 #include <algorithm>
 #include <typeinfo>
+#include <vector>
+#include <cmath>
+#include <string>
 
 using namespace std;
 
@@ -40,50 +40,68 @@ void sortPiramid(int** a, int Size){ // пирамидальная сортир�
     }     
 }
 
-int main(){
-
+int main()
+{
     int size = 0;
+ 
     string temp;
-    vector<int>nach;
-    ifstream fin("Data.txt");
     string inp;
-    while(getline(fin, inp)){ // считывание из файла
+    vector<int>nach;
+
+    ifstream fin("Data.txt");
+    
+    while(getline(fin, inp)) // считывание из файла
+    {
         ++size;
+
         temp = "";
-        for (int i = 0; i < inp.length(); ++i){
-            if(inp[i] != ' ') temp += inp[i];
-            else {
+        
+        for (int i = 0; i < inp.length(); ++i)
+        {
+            if(inp[i] != ' ')
+            {
+                temp += inp[i];
+            }
+            else 
+            {
                 nach.push_back(stoi(temp));
                 temp = "";
             }   
         }
+
         nach.push_back(stoi(temp)); 
     }
-    fin.close();
-    
 
-    int** a = new int*[size]; // блок с созданием исходного массива
+    fin.close();
+
+    // блок с созданием исходного массива
+    int** a = new int*[size]; 
     for (int i = 0; i <= size; ++i) a[i] = new int[size];
 
     int add = 0;
-    for (int i = 0; i < size; ++i){
-        for (int j = 0; j < size; ++j){
+    for (int i = 0; i < size; ++i)
+    {
+        for (int j = 0; j < size; ++j)
+        {
             a[i][j] = nach[add];
             ++add;
         }
-        
     }
 
-    sortPiramid(a, size); // вызов сортировки
+    // вызов сортировки
+    sortPiramid(a, size); 
 
-    fstream fout("output_1.txt"); // вывод в файл отсортированного массива
-    for (int i = 0; i < size; ++i){
-        for (int j = 0; j < size; ++j){
+    // вывод в файл отсортированного массива
+    fstream fout("output_1.txt"); 
+    for (int i = 0; i < size; ++i)
+    {
+        for (int j = 0; j < size; ++j)
+        {
             fout << a[i][j] << " ";
         }
+
         fout << endl;
     } 
-    fout.close();  
 
     return 0;
 }    

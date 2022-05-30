@@ -1,18 +1,20 @@
 #include <iostream>
-#include <cstdlib>
-#include <vector>
 #include <fstream>
-#include <cmath>
-#include <string>
+#include <cstdlib>
 #include <algorithm>
 #include <typeinfo>
+#include <vector>
+#include <cmath>
+#include <string>
 
 using namespace std;
 
-void insertion_sort(int* a, int size){ // СЃРѕСЂС‚РёСЂРѕРІРєР° РІСЃС‚Р°РІРєР°РјРё РґР»СЏ С‡РёСЃРµР»
+void insertion_sort(int* a, int size)
+{
     int isxodP = 0, position = 0, temp;
     string temp1;
-    for (int i = 0; i < size; ++i){ // РІС‹С‡РёСЃР»РµРЅРёРµ РєРѕР»РёС‡РµСЃС‚РІР° СЌР»РµРјРµРЅС‚РѕРІ РЅР°С‡Р°Р»СЊРЅРѕР№ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚Рё
+    for (int i = 0; i < size; ++i)
+    {
         if(a[i] < a[i + 1]) ++isxodP;
         else break;
     }
@@ -20,25 +22,30 @@ void insertion_sort(int* a, int size){ // СЃРѕСЂС‚РёСЂРѕРІРє�
         for (int i = isxodP; i < size; ++i){
             position = 0;
             temp = 0;
-            for (int j = 0; j < isxodP; ++j){ // РІС‹С‡РёСЃР»РµРЅРёРµ РїРѕР·РёС†РёРё РІСЃС‚Р°РІРєРё СЃРѕСЂС‚РёСЂСѓРµРјРѕРіРѕ СЌР»РµРјРµРЅС‚Р°
+            for (int j = 0; j < isxodP; ++j)
+            { 
                 if(a[j] <= a[isxodP]) ++position;
                 else break;
             }
+
             if(position - 1 == isxodP) ++isxodP;
             else{
                 temp = a[isxodP];
-                for (int j = isxodP; j > position; --j){ // СЃРґРІРёРі СЌР»РµРјРµРЅС‚РѕРІ РІ РїСЂР°РІРѕ
+                for (int j = isxodP; j > position; --j)
+                {
                     a[j] = a[j-1];
                 }
+
                 a[position] = temp;
             }
+
             ++isxodP;
         }
     }
 }
 
-int main(){
-
+int main()
+{
     int size = 0;
     string temp;
     vector<int>nach;

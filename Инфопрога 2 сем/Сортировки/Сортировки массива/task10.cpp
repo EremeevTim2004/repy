@@ -1,11 +1,11 @@
 #include <iostream>
-#include <cstdlib>
-#include <vector>
 #include <fstream>
-#include <cmath>
-#include <string>
+#include <cstdlib>
 #include <algorithm>
 #include <typeinfo>
+#include <vector>
+#include <cmath>
+#include <string>
 
 using namespace std;
 
@@ -72,8 +72,7 @@ int main(){
             fout << a[i][j] << " ";
         }
         fout << endl;
-    } 
-    fout.close();  
+    }
 
     return 0;
 }    
