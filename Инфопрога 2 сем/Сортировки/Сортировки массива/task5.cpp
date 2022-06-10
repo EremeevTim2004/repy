@@ -92,7 +92,7 @@ int main()
     sortPiramid(a, size); 
 
     // вывод в файл отсортированного массива
-    fstream fout("output_1.txt"); 
+    ofstream fout("output_1.txt"); 
     for (int i = 0; i < size; ++i)
     {
         for (int j = 0; j < size; ++j)
@@ -101,7 +101,8 @@ int main()
         }
 
         fout << endl;
-    } 
+    }
+    fout.close();
 
     return 0;
 }    

@@ -8,8 +8,8 @@
 
 using namespace std;
 
-ifstream in("Date.txt"); 
-ofstream out("SortedDate_3.txt"); 
+#define INPUT_FILE "Data.txt"
+#define OUTPUT_FILE "SortedData_3.txt"
 
 struct Date
 {
@@ -46,9 +46,13 @@ Date Str_to_Date(string str )
   return x;
 }
 
-vector<people> inFile()
+void print_person(people x) {
+  cout << x.surname << " " << x.occ << " " << x.exp << " " << x.salary << endl;
+}
+
+void inFile(vector<people> &x)
 {
-  vector<people> x;
+  ifstream in(INPUT_FILE);
   people temp;
 
   while(in.peek() != EOF)
@@ -60,10 +64,10 @@ vector<people> inFile()
     temp.date_of_birth = Str_to_Date(tmp);
     in >> temp.exp;
     in >> temp.salary;
+    std::cout << "Loaded Person: " << std::endl;
+    print_person(temp);
     x.push_back(temp);
   }
-
-  return x;
 }
 
 bool operator < (people a, people b)
@@ -75,20 +79,25 @@ bool operator < (people a, people b)
  return false;
 }
 
-void print(people x)
+void WriteResult(vector<people> &px)
 {
-  out << setw(10) << left << x.surname;
-  out << setw(10) << left << x.occ;
+  ofstream out(OUTPUT_FILE);
 
-  if (x.date_of_birth.d < 10) out << left << "0" << x.date_of_birth.d << ".";
-  else out << left << x.date_of_birth.d << ".";
+  for (people x : px)
+  {
+    out << setw(10) << left << x.surname;
+    out << setw(10) << left << x.occ;
 
-  if (x.date_of_birth.m < 10) out << "0" << x.date_of_birth.m << ".";
-  else out << x.date_of_birth.m << ".";
+    if (x.date_of_birth.d < 10) out << left << "0" << x.date_of_birth.d << ".";
+    else out << left << x.date_of_birth.d << ".";
 
-  out << left << setw(6) << x.date_of_birth.y;//       6        
-  out << left << setw(6) << x.exp;//    
-  out << left << setw(10) << x.salary << endl;//        
+    if (x.date_of_birth.m < 10) out << "0" << x.date_of_birth.m << ".";
+    else out << x.date_of_birth.m << ".";
+
+    out << left << setw(6) << x.date_of_birth.y;//       6        
+    out << left << setw(6) << x.exp;//    
+    out << left << setw(10) << x.salary << endl;//   
+  }     
 }
 
 void bubblesort(vector<people>&A)
@@ -108,10 +117,11 @@ void bubblesort(vector<people>&A)
 int main()
 {
     vector<people> x;
-    x = inFile () ;
-    int size = x.size();  
+    inFile (x) ;
+    int size = x.size(); 
+    std::cout << size << std::endl;
     bubblesort (x);
-    for(int i = 0; i <  size; i++) print (x[i ]); 
+    WriteResult(x);
     
     return 0;
 }

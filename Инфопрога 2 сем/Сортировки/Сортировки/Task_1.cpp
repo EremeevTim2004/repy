@@ -8,8 +8,9 @@
 
 using namespace std;
 
-ifstream in("Date.txt"); 
-ofstream out("SortedDate_1.txt"); 
+#define INPUT_FILE "Data.txt"
+#define OUTPUT_FILE "SortedData_1.txt"
+
 
 struct Date
 {
@@ -29,7 +30,7 @@ struct people
   int salary;
 };
 
-Date Str_to_Date(string str )
+Date Str_to_Date(string str)
 {
   Date x;
   string temp;
@@ -46,9 +47,13 @@ Date Str_to_Date(string str )
   return x;
 }
 
-vector<people> inFile()
+void print_person(people x) {
+  cout << x.surname << " " << x.occ << " " << x.exp << " " << x.salary << endl;
+}
+
+void inFile(vector<people> &x)
 {
-  vector<people> x;
+  ifstream in(INPUT_FILE);
   people temp;
 
   while(in.peek() != EOF)
@@ -59,11 +64,11 @@ vector<people> inFile()
     in >> tmp;
     temp.date_of_birth = Str_to_Date(tmp);
     in >> temp.exp;
-    in >> temp.salary;
+    in >> temp.salary; 
+    cout << "Loaded Person: ";
+    print_person(temp);
     x.push_back(temp);
   }
-
-  return x;
 }
 
 bool operator < (people a, people b) 
@@ -81,20 +86,24 @@ bool operator > (people a, people b)
 }
 
 
-void print(people x)
+void writeResult(vector<people> &px)
 {
-  out << setw(10) << left << x.surname;
-  out << setw(10) << left << x.occ;
+  ofstream out(OUTPUT_FILE);
 
-  if (x.date_of_birth.d < 10) out << left << "0" << x.date_of_birth.d << ".";
-  else out << left << x.date_of_birth.d << ".";
+  for (people x : px) {
+    out << setw(10) << left << x.surname;
+    out << setw(10) << left << x.occ;
 
-  if (x.date_of_birth.m < 10) out << "0" << x.date_of_birth.m << ".";
-  else out << x.date_of_birth.m << ".";
+    if (x.date_of_birth.d < 10) out << left << "0" << x.date_of_birth.d << ".";
+    else out << left << x.date_of_birth.d << ".";
 
-  out << left << setw(6) << x.date_of_birth.y;//       6        
-  out << left << setw(6) << x.exp;//    
-  out << left << setw(10) << x.salary << endl;//        
+    if (x.date_of_birth.m < 10) out << "0" << x.date_of_birth.m << ".";
+    else out << x.date_of_birth.m << ".";
+
+    out << left << setw(6) << x.date_of_birth.y;//
+    out << left << setw(6) << x.exp;//
+    out << left << setw(10) << x.salary << endl;//
+  }   
 }
 
 void quick_sort(vector<people> &mas, int first, int last)
@@ -124,11 +133,11 @@ void quick_sort(vector<people> &mas, int first, int last)
 int main()
 {
     vector<people> x;
-    x = inFile () ;
+    inFile (x) ;
     int size = x.size();
-    cout << size;
-    quick_sort (x,0,size-1);
-    for(int i = 0; i < size; i++) print (x[i ]);
-
+    cout << size << endl;
+    quick_sort (x, 0, x.size()-1);
+    writeResult(x);
+    
     return 0;
 }

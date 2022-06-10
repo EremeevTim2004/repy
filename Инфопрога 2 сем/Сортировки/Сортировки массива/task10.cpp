@@ -66,7 +66,7 @@ int main(){
 
     sortDwarf(a, size); // вызов сортировки
 
-    fstream fout("output_2.txt"); // вывод в файл отсортированного массива
+    ofstream fout("output_2.txt"); // вывод в файл отсортированного массива
     for (int i = 0; i < size; ++i){
         for (int j = 0; j < size; ++j){
             fout << a[i][j] << " ";

@@ -1,48 +1,94 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
-int main()
-{
-	vector <vector <int>> A(4);
-	vector <vector <int>> B(4);
+struct point {
+	double x, y;
+
+	point(double x, double y) {
+		this -> x = x;
+		this -> y = y;
+	}
+};
+
+bool operator < (point a, point b) {
+	return a.x < b.x || (a.x == b.x && a.y < b.y);
+}
+
+bool operator > (point a, point b) {
+	return b < a;
+}
+
+bool cw (point a, point b, point c) {
+	return a.x*(b.y-c.y)+b.x*(c.y-a.y)+c.x*(a.y-b.y) < 0;
+}
+
+bool ccw (point a, point b, point c) {
+	return a.x*(b.y-c.y)+b.x*(c.y-a.y)+c.x*(a.y-b.y) > 0;
+}
+
+vector<point> convex_hull(vector<point> &a) {
 	
-	// Заполнение матрицы А
-	std::cin >> A[0][0] >> A[0][1] >> A[1][0] >> A[1][1];
+	if (a.size() == 1)  return a;
+	
+	sort(a.begin(), a.end());
+	
+	point p1 = a[0],  p2 = a.back();
+	
+	vector<point> up, down;
+	up.push_back (p1);
+	down.push_back (p1);
+	
+	for (size_t i = 1;i < a.size(); i++) {
 
-	// Заполнение матрицы В
-	std::cin >> B[0][0] >> B[0][1] >> B[1][0] >> B[1][1];
+		if (i == a.size() - 1 || cw(p1, a[i], p2)) {
+			while (up.size() >= 2 && !cw(up[up.size() - 2], up[up.size() - 1], a[i]))
+				up.pop_back();
+			up.push_back (a[i]);
+		}
+		if (i == a.size() - 1 || ccw(p1, a[i], p2)) {
+			while (down.size() >= 2 && !ccw(down[down.size() - 2], down[down.size() - 1], a[i]))
+				down.pop_back();
+			down.push_back (a[i]);
+		}
+	}
 
-	// Вывод исходных матриц
-	std::cout << "Matrix A:" << std::endl;
-	std::cout << A[0][0] << " "; std::cout << A[0][1] << " " << std::endl;
-	std::cout << A[1][0] << " "; std::cout << A[1][1] << " " << std::endl;
+	a.clear();
+	
+	for (size_t i=0; i<up.size(); ++i)
+		a.push_back (up[i]);
+	
+	for (size_t i=down.size()-2; i>0; --i)
+		a.push_back (down[i]);
 
-	std::cout << "Matrix B:" << std::endl;
-	std::cout << B[0][0] << " "; std::cout << B[0][1] << " " << std::endl;
-	std::cout << B[1][0] << " "; std::cout << B[1][1] << " " << std::endl;
+	reverse(a.begin(), a.end());
 
-	// Strassen's idea
-	vector<vector <int>> C;
+	return a;
 
-	int P1, P2, P3, P4, P5, P6, P7;
+}
 
-	P1 = A[0][0]*(B[0][1] - B[1][1]); 
-	P2 = (A[0][0] + A[0][1]) * B[1][1];
-	P3 = (A[1][0] + A[1][1]) * B[0][0];
-	P4 = A[1][1] * (B[1][0] - B[0][0]);
-	P5 = (A[0][0] + A[1][1]) * (B[0][0] + B[1][1]);
-	P6 = (A[0][1] - A[1][1]) * (B[0][1] + B[1][1]); 
-	P7 = (A[0][0] - A[1][0]) * (B[0][0] + B[0][1]);
+void print(vector<point> &points) {
+	for (int i = 0; i < points.size(); i++) {
+		cout << "(" << points[i].x << ", " << points[i].y << "), ";
+	}
+	cout << endl;
+}
 
-	C[1][1] = P5 + P4 - P2 + P6;
-	C[2][1] = P1 + P2;
-	C[1][2] = P3 + P4;
-	C[2][2] = P5 + P1 - P3 - P7;
+int main() {
 
-	// Вывод результата
-	std::cout << "Matrix C:" << std::endl;
-	std::cout << C[0][0] << " "; std::cout << C[0][1] << " " << std::endl;
-	std::cout << C[1][0] << " "; std::cout << C[1][1] << " " << std::endl;
+	vector<point> points;
+
+	points.push_back(point(0, 0));
+	points.push_back(point(0, 2));
+	points.push_back(point(1, 1));
+	points.push_back(point(4, 2));
+	points.push_back(point(4, 0));
+
+	vector<point> res = convex_hull(points);
+
+	print(res);
+
+	return 0;
 }
